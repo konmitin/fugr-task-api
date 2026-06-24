@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
     public function seedOptions()
     {
-        DB::table('status')->insert([
+        DB::table('statuses')->insert([
             'created_at' => now(),
             'updated_at' => now(),
             'title' => 'Не выполнена',
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'type' => 'start',
         ]);
 
-        DB::table('status')->insert([
+        DB::table('statuses')->insert([
             'created_at' => now(),
             'updated_at' => now(),
             'title' => 'Выполнена',
@@ -40,40 +40,40 @@ class DatabaseSeeder extends Seeder
             'type' => 'success',
         ]);
 
-        DB::table('priority')->insert([
+        DB::table('priorities')->insert([
             'created_at' => now(),
             'updated_at' => now(),
             'title' => 'Низкий',
             'position' => 100,
         ]);
 
-        DB::table('priority')->insert([
+        DB::table('priorities')->insert([
             'created_at' => now(),
             'updated_at' => now(),
             'title' => 'Средний',
             'position' => 200,
         ]);
 
-        DB::table('priority')->insert([
+        DB::table('priorities')->insert([
             'created_at' => now(),
             'updated_at' => now(),
             'title' => 'Высокий',
             'position' => 300,
         ]);
 
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'created_at' => now(),
             'updated_at' => now(),
             'title' => 'Работа',
         ]);
 
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'created_at' => now(),
             'updated_at' => now(),
             'title' => 'Дом',
         ]);
 
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'created_at' => now(),
             'updated_at' => now(),
             'title' => 'Личное',

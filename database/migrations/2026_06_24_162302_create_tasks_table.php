@@ -20,13 +20,13 @@ return new class extends Migration
             $table->text('description');
 
             $table->unsignedBigInteger('status_id');
-            $table->foreign('status_id')->references('id')->on('status');
+            $table->foreign('status_id')->references('id')->on('statuses');
 
             $table->unsignedBigInteger('priority_id');
-            $table->foreign('priority_id')->references('id')->on('priority');
+            $table->foreign('priority_id')->references('id')->on('priorities');
 
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('category');
+            $table->foreign('category_id')->references('id')->on('categories');
 
             
         });
