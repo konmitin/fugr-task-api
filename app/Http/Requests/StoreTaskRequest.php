@@ -78,9 +78,9 @@ class StoreTaskRequest extends FormRequest
             'description' => 'nullable|string',
             'created_at' => 'nullable|date',
             'due_date' => 'required|date',
-            'status_id' => 'required|exists:status,id',
-            'priority_id' => 'required|exists:priority,id',
-            'category_id' => 'required|exists:category,id',
+            'status_id' => 'required|exists:statuses,id',
+            'priority_id' => 'required|exists:priorities,id',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }
