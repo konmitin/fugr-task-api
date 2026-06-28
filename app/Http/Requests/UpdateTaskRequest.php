@@ -78,9 +78,9 @@ class UpdateTaskRequest extends FormRequest
             'description' => 'nullable|string',
             'created_at' => 'nullable|date',
             'due_date' => 'nullable|date',
-            'status_id' => 'nullable|exists:status,id',
-            'priority_id' => 'nullable|exists:priority,id',
-            'category_id' => 'nullable|exists:category,id',
+            'status_id' => 'nullable|exists:statuses,id',
+            'priority_id' => 'nullable|exists:priorities,id',
+            'category_id' => 'nullable|exists:categories,id',
         ];
     }
 }

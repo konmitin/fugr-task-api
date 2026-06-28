@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\TaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskCollection;
 use App\Http\Resources\TaskResource;
+use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -69,11 +71,11 @@ class TaskController extends Controller
     public function index(TaskRequest $taskRequest): Response
     {
 
-        $validatedData = $taskRequest->validated();
+        $data = $taskRequest->validated();
 
-        $search =  $validatedData['search'] ?? null;
-        $sort =  $validatedData['sort'] ?? null;
-        $per_page =  $validatedData['per_page'] ?? 20;
+        $search =  $data['search'] ?? null;
+        $sort =  $data['sort'] ?? null;
+        $per_page =  $data['per_page'] ?? 20;
 
         $tasks = Task::query();
 
@@ -143,6 +145,136 @@ class TaskController extends Controller
         return response([
             'id' => $task->id,
             'message' => 'Task created',
+        ]);
+    }
+
+    #[
+        OA\Post(
+            path: '/tasks/{id}',
+            description: '',
+            summary: 'Обновление задачи',
+            requestBody: new OA\RequestBody(
+                required: true,
+                content: new OA\JsonContent(
+                    ref: '#components/schemas/UpdateTaskRequest'
+                )
+            ),
+            tags: ['Task'],
+            responses: [
+                new OA\Response(
+                    response: 200,
+                    description: 'OK',
+                    content: new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: 'message',
+                                description: 'Сообщение в ответ на запрос',
+                                type: 'string',
+                                example: 'Task updated'
+                            ),
+                        ]
+                    )
+                ),
+                new OA\Response(
+                    response: 404,
+                    description: 'Task not found',
+                ),
+                new OA\Response(
+                    response: 422,
+                    description: 'Validation exception'
+                )
+            ]
+        )
+
+    ]
+    public function update(UpdateTaskRequest $updateRequest, Task $task): Response
+    {
+        Log::info($updateRequest->all());
+
+        $task->update($updateRequest->validated());
+
+        return response([
+            'message' => 'Task updated',
+        ]);
+    }
+
+    #[OA\Get(
+        path: '/tasks/{id}',
+        description: '',
+        summary: 'Получение конкретной задачи',
+        tags: ['Task'],
+        parameters: [
+            new OA\Parameter(
+                parameter: 'id',
+                name: 'Task ID',
+                description: 'Идентификатор задачи',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer', example: 1)
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'OK',
+                content: new OA\JsonContent(
+                    ref: '#component/schemas/TaskResource'
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Task not found',
+            )
+        ]
+    )]
+    public function show(Task $task): Response
+    {
+        return response(new TaskResource($task));
+    }
+
+    #[OA\Get(
+        path: '/tasks/{id}',
+        description: '',
+        summary: 'Удаление задачи',
+        tags: ['Task'],
+        parameters: [
+            new OA\Parameter(
+                parameter: 'id',
+                name: 'Task ID',
+                description: 'Идентификатор задачи',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer', example: 1)
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'OK',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'message',
+                            description: 'Сообщение в ответ на запрос',
+                            type: 'string',
+                            example: 'Task destroyed'
+                        ),
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Task not found',
+            )
+        ]
+    )]
+    public function destroy(Task $task): Response
+    {
+
+        $task->delete();
+
+        return response([
+            'message' => 'Task destroyed',
         ]);
     }
 }
