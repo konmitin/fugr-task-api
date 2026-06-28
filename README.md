@@ -1,14 +1,24 @@
-#  REST API для управления списком задач
+# REST API для управления списком задач
 
 ## Запуск приложения
 
-После клонирования репозитория, в папке проекта:
-
-    composer install
-
-Далее создать .env файла на основе .env.example:
+Клонировать репозиторий и в папке проекта:
 
     cp .env.example .env
+
+Заполнить основные данные в .env для БД:
+
+    - APP_ENV
+    - APP_DEBUG
+    - DB_DATABASE
+    - DB_USERNAME
+    - DB_PASSWORD
+
+Далее работа с Docker:
+
+    docker compose up -d
+    docker exec -it laravel-app bash
+    composer install
 
 Сгенерировать ключ приложения:
 
@@ -20,19 +30,19 @@
 
 ### Функционал приложения:
 
-- Создание задачи - POST /api/tasks
-- Получение списка задач - GET /api/tasks
-- Получение конкретной задачи - GET /api/tasks{id}
-- Обновление задачи - PATCH /api/tasks{id}
-- Удаление задачи - DELETE /api/tasks{id}  
-- Swagger документация - /api/documentation#/
-  
+- Создание задачи - POST http://localhost:8080/api/tasks
+- Получение списка задач - GET http://localhost:8080/api/tasks
+- Получение конкретной задачи - GET http://localhost:8080/api/tasks{id}
+- Обновление задачи - PATCH http://localhost:8080/api/tasks{id}
+- Удаление задачи - DELETE http://localhost:8080/api/tasks{id}
+- Swagger документация - http://localhost:8080/api/documentation#/
+
 ### Тестирование
 
 - Заполнение БД тестовыми данными:
 
-    php artisan DB:seed
+  php artisan DB:seed
 
 - Запуск функциональных тестов:
 
-    php artisan test
+  php artisan test
