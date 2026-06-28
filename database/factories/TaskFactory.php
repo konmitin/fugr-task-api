@@ -24,7 +24,7 @@ class TaskFactory extends Factory
         return [
             'title' => fake('ru_RU')->sentence(random_int(1, 5)),
             'description' => fake('ru_RU')->sentence(random_int(0, 20)),
-            'due_date' => fake('ru_RU')->dateTime(),
+            'due_date' => fake('ru_RU')->dateTimeBetween('now', '+1 year'),
             'created_at' => now(),
             'updated_at' => now(),
             'status_id' => random_int(1, 2),

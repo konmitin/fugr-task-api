@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('due_date');
 
             $table->string('title', 255);
-            $table->text('description');
+            $table->text('description')->nullable();
 
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')->references('id')->on('statuses');

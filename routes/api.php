@@ -8,5 +8,5 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('tasks', TaskController::class)->missing(function (Request $request) {
     return response([
         'message' => 'Task not found'
-    ]);
+    ], 404);
 });

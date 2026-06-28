@@ -149,7 +149,7 @@ class TaskController extends Controller
     }
 
     #[
-        OA\Post(
+        OA\Patch(
             path: '/tasks/{id}',
             description: '',
             summary: 'Обновление задачи',
@@ -232,7 +232,7 @@ class TaskController extends Controller
         return response(new TaskResource($task));
     }
 
-    #[OA\Get(
+    #[OA\Delete(
         path: '/tasks/{id}',
         description: '',
         summary: 'Удаление задачи',

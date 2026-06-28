@@ -1,0 +1,390 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Task Api Documentation",
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8888/api",
+            "description": "Task REST API server"
+        }
+    ],
+    "paths": {
+        "/tasks": {
+            "get": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Список задач",
+                "description": "",
+                "operationId": "6a93d54730cde509d735e538ab6800f6",
+                "parameters": [
+                    {
+                        "parameter": "page",
+                        "name": "page",
+                        "in": "query",
+                        "description": "Страница списка",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 2
+                        }
+                    },
+                    {
+                        "parameter": "per_page",
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Кол-во задач на странице",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "parameter": "search",
+                        "name": "search",
+                        "in": "query",
+                        "description": "Строка поиска по названию задачи",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "Задача для поиска"
+                        }
+                    },
+                    {
+                        "parameter": "sort",
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Поле для сортировки задачи",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "due_date"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#components/schemas/TaskResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Создание задачи",
+                "description": "",
+                "operationId": "9b481c0ed5fdfa1a592d70ba39a348ee",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/StoreTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Идентификатор задачи",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "message": {
+                                            "description": "Сообщение в ответ на запрос",
+                                            "type": "string",
+                                            "example": "Task created"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Получение конкретной задачи",
+                "description": "",
+                "operationId": "fd3677b5b24695d7b801715869b1357c",
+                "parameters": [
+                    {
+                        "parameter": "id",
+                        "name": "Task ID",
+                        "in": "path",
+                        "description": "Идентификатор задачи",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#component/schemas/TaskResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Удаление задачи",
+                "description": "",
+                "operationId": "5ed5dfd4c645e9398f4282969bfe6478",
+                "parameters": [
+                    {
+                        "parameter": "id",
+                        "name": "Task ID",
+                        "in": "path",
+                        "description": "Идентификатор задачи",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Сообщение в ответ на запрос",
+                                            "type": "string",
+                                            "example": "Task destroyed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Обновление задачи",
+                "description": "",
+                "operationId": "ab7f6495d7aa7a0be197e6f80c2197b2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/UpdateTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Сообщение в ответ на запрос",
+                                            "type": "string",
+                                            "example": "Task updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    },
+                    "422": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StoreTaskRequest": {
+                "title": "TaskRequest",
+                "properties": {
+                    "title": {
+                        "description": "Название задачи",
+                        "type": "string",
+                        "example": "Выполнение тестового задания"
+                    },
+                    "description": {
+                        "description": "Описание задачи",
+                        "type": "string",
+                        "example": "Тестовое задание необходимо выполнить в течении 5 рабочих дней"
+                    },
+                    "due_date": {
+                        "description": "Срок выполнения",
+                        "type": "date-time",
+                        "example": "2026-06-26T10:00:00"
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "date-time",
+                        "example": "2026-06-26T10:00:00"
+                    },
+                    "status_id": {
+                        "description": "Статус задачи",
+                        "type": "integer",
+                        "format": "long",
+                        "example": "Не выполнена"
+                    },
+                    "priority": {
+                        "description": "Приоритет задачи",
+                        "type": "integer",
+                        "format": "long",
+                        "example": "Высокий"
+                    },
+                    "category": {
+                        "description": "Категория задачи",
+                        "type": "integer",
+                        "format": "long",
+                        "example": "Работа"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "TaskRequest"
+                }
+            },
+            "TaskRequest": {
+                "title": "TaskRequest",
+                "properties": {
+                    "page": {
+                        "description": "Страница для вывода",
+                        "type": "integer",
+                        "example": "2"
+                    },
+                    "per_page": {
+                        "description": "Кол-во элементов на странице",
+                        "type": "integer",
+                        "example": "20"
+                    },
+                    "search": {
+                        "description": "Строка поиска по названию",
+                        "type": "string",
+                        "example": "Задача для поиска"
+                    },
+                    "sort": {
+                        "description": "Поле для сортировки",
+                        "type": "string",
+                        "example": "due_date"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "TaskRequest"
+                }
+            },
+            "UpdateTaskRequest": {
+                "title": "TaskRequest",
+                "properties": {
+                    "title": {
+                        "description": "Название задачи",
+                        "type": "string",
+                        "example": "Выполнение тестового задания"
+                    },
+                    "description": {
+                        "description": "Описание задачи",
+                        "type": "string",
+                        "example": "Тестовое задание необходимо выполнить в течении 5 рабочих дней"
+                    },
+                    "due_date": {
+                        "description": "Срок выполнения",
+                        "type": "date-time",
+                        "example": "2026-06-26T10:00:00"
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "date-time",
+                        "example": "2026-06-26T10:00:00"
+                    },
+                    "status_id": {
+                        "description": "Статус задачи",
+                        "type": "integer",
+                        "format": "long",
+                        "example": "Не выполнена"
+                    },
+                    "priority_id": {
+                        "description": "Приоритет задачи",
+                        "type": "integer",
+                        "format": "long",
+                        "example": "Высокий"
+                    },
+                    "category_id": {
+                        "description": "Категория задачи",
+                        "type": "integer",
+                        "format": "long",
+                        "example": "Работа"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "TaskRequest"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Task",
+            "description": "Управление списком задач"
+        }
+    ]
+}
